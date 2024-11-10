@@ -1,6 +1,0 @@
-# bin/pre-build
-#!/bin/bash
-set -e
-
-# Run templ generate to prepare view files
-templ generate
