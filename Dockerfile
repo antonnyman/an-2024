@@ -25,7 +25,6 @@ FROM alpine:latest AS deploy-stage
 WORKDIR /
 COPY --from=build-stage /app/app /app
 EXPOSE 8080
-USER nonroot:nonroot
 ENTRYPOINT ["/app"]
 
 ## Install any dependencies for templ, if needed
