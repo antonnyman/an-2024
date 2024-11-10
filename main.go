@@ -25,10 +25,11 @@ func main() {
 
 	app.HTTPErrorHandler = routes.HTTPErrorHandler
 
-	port := os.Getenv("PORT")
+	env := os.Getenv("APP_ENV")
+	port := ":3456"
 
-	if len(port) == 0 {
-		port = ":3456"
+	if env == "production" {
+		port = ":5000"
 	}
 
 	if err := app.Start(port); !errors.Is(err, http.ErrServerClosed) {
