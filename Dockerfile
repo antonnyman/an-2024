@@ -1,31 +1,55 @@
-# Build Stage
-FROM golang:1.21-alpine as builder
-
+# Fetch
+FROM golang:latest AS fetch-stage
+COPY go.mod go.sum /app
 WORKDIR /app
-
-# Install any dependencies for templ, if needed
-RUN apk add --no-cache git
-
-COPY go.mod go.sum ./
 RUN go mod download
 
-COPY . .
-
-RUN go fmt && \
-    templ fmt ./views && \
-    templ generate && \
-    go build -o /app/main .
-
-# Production Stage with Alpine
-FROM alpine:latest
-
+# Generate
+FROM ghcr.io/a-h/templ:latest AS generate-stage
+COPY --chown=65532:65532 . /app
 WORKDIR /app
+RUN ["templ", "generate"]
 
-# Copy only the compiled binary
-COPY --from=builder /app/main /app/main
+# Build
+FROM golang:latest AS build-stage
+COPY --from=generate-stage /app /app
+WORKDIR /app
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/app
 
-# Expose the required port
-EXPOSE 8000
+# Test
+FROM build-stage AS test-stage
+RUN go test -v ./...
 
-# Run the application
-CMD ["/app/main"]
+# Deploy
+FROM alpine:latest AS deploy-stage
+WORKDIR /
+COPY --from=build-stage /app/app /app
+EXPOSE 8080
+USER nonroot:nonroot
+ENTRYPOINT ["/app"]
+
+## Install any dependencies for templ, if needed
+#RUN apk add --no-cache git
+#
+#RUN go mod download
+#
+#COPY . .
+#
+#RUN go fmt && \
+#    templ fmt ./views && \
+#    templ generate && \
+#    go build -o /app/main .
+#
+## Production Stage with Alpine
+#FROM alpine:latest
+#
+#WORKDIR /app
+#
+## Copy only the compiled binary
+#COPY --from=builder /app/main /app/main
+#
+## Expose the required port
+#EXPOSE 8000
+#
+## Run the application
+#CMD ["/app/main"]
