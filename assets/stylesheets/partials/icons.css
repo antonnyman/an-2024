@@ -1,0 +1,25 @@
+.side-project__icon,
+.side-project__icon-appstore {
+  color: var(--color-black);
+}
+
+@media (prefers-color-scheme: dark) {
+  .side-project__icon,
+  .side-project__icon-appstore {
+    color: var(--color-white);
+  }
+}
+
+.mail-icon {
+  width: 26px;
+  height: 26px;
+}
+.github-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.copy-icon {
+  width: 16px;
+  height: 16px;
+}

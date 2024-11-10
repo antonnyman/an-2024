@@ -1,0 +1,21 @@
+.content .avatar {
+  border-radius: 1rem;
+  margin-bottom: 4rem;
+}
+
+.app-store-light {
+  display: flex;
+}
+
+.app-store-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-store-light {
+    display: none;
+  }
+  .app-store-dark {
+    display: flex;
+  }
+}

@@ -1,0 +1,55 @@
+b,
+strong {
+  color: var(--color-black);
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  b,
+  strong {
+    color: var(--color-white);
+  }
+}
+
+i,
+em {
+  font-style: italic;
+}
+
+code {
+  /* background: rgba(var(--rgb-blue-dark), 0.2); */
+  border-radius: 0.1em;
+  color: var(--color-black);
+  display: inline-block;
+  font-family: Menlo, Monaco, Consolas, "Courier New", Monospace;
+  font-weight: 300;
+  /* font-size: 85%;
+  line-height: 1.1;
+  padding: 0.2em 0.3em 0.15em 0.3em; */
+}
+
+@media (prefers-color-scheme: dark) {
+  code {
+    color: var(--color-white);
+  }
+}
+
+.container .content h1 {
+  font-size: larger;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.container .content p {
+  font-size: normal;
+  font-weight: normal;
+  margin: 1.5rem 0;
+}
+
+.side-project h3 {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 1rem;
+}

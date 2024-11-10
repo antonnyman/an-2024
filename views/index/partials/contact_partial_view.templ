@@ -1,0 +1,27 @@
+package partials
+
+import "an-2024/views/svg"
+
+templ ContactPartialView() {
+	<div class="contact">
+		<div class="contact__item">
+			@svg.MailIconView()
+			<div class="contact__content">
+				<button class="a" data-click-to-copy><span>anton@antonnyman.se</span></button>
+				<button data-click-to-copy class="copy" id="copy">
+					@svg.CopyIconView()
+				</button>
+				<div class="hidden" id="copied">
+					@svg.CheckIconView()
+					<div>Copied!</div>
+				</div>
+			</div>
+		</div>
+		<div class="contact__item">
+			@svg.GithubIconView()
+			<div class="contact__content">
+				<a href="https://github.com/antonnyman">GitHub</a>
+			</div>
+		</div>
+	</div>
+}

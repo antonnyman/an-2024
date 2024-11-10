@@ -1,0 +1,46 @@
+/* Order: 2 */
+
+html {
+  min-height: -webkit-fill-available;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--font-size) * 3.4);
+  font-size: 10px;
+}
+
+html.zoom-active {
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-white);
+  font-size: var(--font-size);
+  color: var(--color-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-weight: 400;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+}
+
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.grid-full {
+  grid-column: 1 / span 2;
+}

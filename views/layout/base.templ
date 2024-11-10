@@ -1,0 +1,19 @@
+package layout
+
+templ Base() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="utf-8"/>
+			<meta content="ie=edge" http-equiv="x-ua-compatible"/>
+			<meta name="viewport" content="initial-scale=1, width=device-width"/>
+			<meta name="description" content=""/>
+			<meta name="robots" content="index, follow"/>
+			<link rel="stylesheet" type="text/css" href={ latestRevisionUrl("/assets/stylesheets/styles.css") }/>
+			<script src={ latestRevisionUrl("/assets/javascripts/index.js") } type="module"></script>
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
+}

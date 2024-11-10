@@ -1,0 +1,24 @@
+package index
+
+import (
+	"an-2024/models"
+	"an-2024/views/index/partials"
+	"an-2024/views/index/sections"
+	"an-2024/views/layout"
+)
+
+templ IndexView(sideProjects []models.SideProject) {
+	@layout.Base() {
+		@layout.Header(false)
+		<main class="main">
+			<div class="container">
+				<div class="content">
+					@partials.ContentPartialView()
+					@partials.AvatarPartialView()
+					@sections.SideProjectsSectionView(sideProjects)
+					@sections.OtherSectionView()
+				</div>
+			</div>
+		</main>
+	}
+}

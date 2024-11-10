@@ -1,0 +1,31 @@
+.header {
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.header__logo-a {
+  color: var(--color-black);
+}
+
+@media (prefers-color-scheme: dark) {
+  .header__logo-a {
+    color: var(--color-white);
+  }
+}
+
+.header__logo-svg {
+  width: 66px;
+}
+
+.header__nav {
+  padding-left: 1rem;
+}
+
+.header__nav a {
+  text-underline-offset: 4px;
+}

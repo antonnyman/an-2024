@@ -1,0 +1,19 @@
+package not_found
+
+import "an-2024/views/layout"
+
+templ FourOhFourView() {
+	@layout.Base() {
+		@layout.Header(true)
+		<main class="main">
+			<div class="container">
+				<div class="content">
+					<h1>404: Page not found</h1>
+					<div class="grid-full">
+						<p>Page was not found. <a href="/">Return to start page</a>.</p>
+					</div>
+				</div>
+			</div>
+		</main>
+	}
+}

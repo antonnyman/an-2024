@@ -1,0 +1,56 @@
+.post {
+  display: grid;
+  grid-template-columns: 1fr fit-content(var(--content-width) 1fr);
+  font-size: 90%;
+}
+
+.post article {
+  grid-column-start: 2;
+  max-width: var(--content-width);
+  padding: 0 1.25rem;
+  margin-bottom: 8rem;
+}
+.post h1 {
+  font-weight: 800;
+  font-size: xx-large;
+  margin: 2rem 0;
+}
+
+.post h2 {
+  font-weight: 700;
+  font-size: x-large;
+  margin: 1.5rem 0;
+}
+
+.post h3 {
+  font-weight: 600;
+  font-size: larger;
+  margin: 1rem 0;
+}
+
+.post p {
+  margin: 1.5rem 0;
+}
+.post .box pre {
+  padding: 1.25rem;
+}
+.post ol,
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style-type: decimal;
+  margin: 1rem 3rem;
+}
+
+.post table th {
+  font-weight: bold;
+}
+
+.post .image-full {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}

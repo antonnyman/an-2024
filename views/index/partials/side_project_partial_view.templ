@@ -1,0 +1,31 @@
+package partials
+
+import (
+	"an-2024/models"
+	"an-2024/views/svg"
+)
+
+templ SideProjectPartialView(sideProject models.SideProject) {
+	<div class="side-project">
+		<div>
+			if sideProject.IsAppStoreIconStyle {
+				<img class="side-project__icon-appstore" src={ sideProject.Icon } width="64"/>
+			} else {
+				<img class="side-project__icon" src={ sideProject.Icon } width="64"/>
+			}
+		</div>
+		<div>
+			<h3>{ sideProject.Title }</h3>
+			<p>{ sideProject.Body }</p>
+			<p>{ sideProject.Comment }</p>
+			if sideProject.IsAppStoreLink {
+				<a href={ templ.URL(sideProject.Link) }>
+					@svg.AppStoreLightIconView()
+					@svg.AppStoreDarkIconView()
+				</a>
+			} else if len(sideProject.Link) != 0 {
+				<a href={ templ.URL(sideProject.Link) }>{ sideProject.LinkText }</a>
+			}
+		</div>
+	</div>
+}

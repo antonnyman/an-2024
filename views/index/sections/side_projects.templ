@@ -1,0 +1,18 @@
+package sections
+
+import (
+	"an-2024/models"
+	"an-2024/views/index/partials"
+)
+
+templ SideProjectsSectionView(sideProjects []models.SideProject) {
+	<article class="grid-full">
+		<h1>Projects</h1>
+		<p>Sometimes I find the time to create an app or a tool that I find useful. Maybe you will too.</p>
+		<div class="side-projects">
+			for _, sideProject := range sideProjects {
+				@partials.SideProjectPartialView(sideProject)
+			}
+		</div>
+	</article>
+}
