@@ -1,29 +1,26 @@
-# Fetch dependencies
+# Fetch
 FROM golang:latest AS fetch-stage
+COPY go.mod go.sum /app
 WORKDIR /app
-COPY go.mod go.sum ./
 RUN go mod download
 
-# Generate views with templ
+# Generate
 FROM ghcr.io/a-h/templ:latest AS generate-stage
+COPY --chown=65532:65532 . /app
 WORKDIR /app
-COPY --from=fetch-stage /app/go.mod /app/go.sum ./
-RUN go mod download
-COPY . .
 RUN ["templ", "generate"]
-# Note also the use of the RUN ["templ", "generate"] command instead of the common RUN templ generate command. This is because the templ Docker container does not contain a shell environment to keep its size minimal, so the command must be ran in the "exec" form.
 
-# Build the application
+# Build
 FROM golang:latest AS build-stage
-WORKDIR /app
 COPY --from=generate-stage /app /app
+WORKDIR /app
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/app
 
-# Run tests
+# Test
 FROM build-stage AS test-stage
 RUN go test -v ./...
 
-# Deploy the application
+# Deploy
 FROM gcr.io/distroless/base-debian12 AS deploy-stage
 WORKDIR /
 COPY --from=build-stage /app/app /app
