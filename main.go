@@ -18,6 +18,10 @@ func main() {
 
 	app.Static("/assets", "assets")
 
+	app.GET("/healthcheck", func(c echo.Context) error {
+		return c.String(http.StatusOK, "OK")
+	})
+
 	app.GET("", routes.IndexView)
 	app.GET("/embroidery", routes.EmbroideryView)
 	app.GET("/blog/my-coffee-recipes", routes.CoffeeRecipesView)
@@ -29,7 +33,7 @@ func main() {
 	port := ":3456"
 
 	if env == "production" {
-		port = ":8080"
+		port = ":5000"
 	}
 
 	if err := app.Start(port); !errors.Is(err, http.ErrServerClosed) {

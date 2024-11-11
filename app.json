@@ -1,0 +1,20 @@
+{
+  "name": "antonnyman",
+  "scripts": {},
+  "env": {},
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "healthchecks": {
+    "web": {
+      "path": "/healthcheck",
+      "protocol": "HTTP",
+      "port": 5000,
+      "interval": 10,
+      "timeout": 5,
+      "max_attempts": 3
+    }
+  }
+}

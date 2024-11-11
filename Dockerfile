@@ -27,7 +27,7 @@ WORKDIR /app
 COPY --from=build-stage /app/app /app/app
 COPY --from=build-stage /app/assets /app/assets
 #RUN chmod +x /app/app  # Ensure the binary has executable permissions
-EXPOSE 8080
+EXPOSE 5000
 USER nonroot:nonroot
 ENTRYPOINT ["/app/app"]
 
