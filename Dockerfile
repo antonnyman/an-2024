@@ -1,7 +1,7 @@
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 # Fetch
 FROM golang:latest AS fetch-stage
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
