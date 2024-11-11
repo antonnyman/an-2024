@@ -9,6 +9,7 @@
   },
   "healthchecks": {
     "web": {
+      "type": "startup",
       "name": "web healthcheck",
       "path": "/healthcheck",
       "protocol": "HTTP",
