@@ -9,6 +9,7 @@
   },
   "healthchecks": {
     "web": {
+      "name": "web healthcheck",
       "path": "/healthcheck",
       "protocol": "HTTP",
       "port": 5000,

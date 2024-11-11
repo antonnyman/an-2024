@@ -31,29 +31,3 @@ EXPOSE 5000
 USER nonroot:nonroot
 ENTRYPOINT ["/app/app"]
 
-
-## Install any dependencies for templ, if needed
-#RUN apk add --no-cache git
-#
-#RUN go mod download
-#
-#COPY . .
-#
-#RUN go fmt && \
-#    templ fmt ./views && \
-#    templ generate && \
-#    go build -o /app/main .
-#
-## Production Stage with Alpine
-#FROM alpine:latest
-#
-#WORKDIR /app
-#
-## Copy only the compiled binary
-#COPY --from=builder /app/main /app/main
-#
-## Expose the required port
-#EXPOSE 8000
-#
-## Run the application
-#CMD ["/app/main"]
