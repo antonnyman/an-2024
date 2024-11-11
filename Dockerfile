@@ -1,7 +1,7 @@
 # Fetch dependencies
 FROM golang:latest AS fetch-stage
-WORKDIR /app
 COPY go.mod go.sum ./
+WORKDIR /app
 RUN go mod download
 
 # Generate views with templ
