@@ -1,19 +1,21 @@
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+
 # Fetch
 FROM golang:latest AS fetch-stage
-COPY go.mod go.sum /app
 WORKDIR /app
+COPY go.mod go.sum ./
 RUN go mod download
 
 # Generate
 FROM ghcr.io/a-h/templ:latest AS generate-stage
-COPY --chown=65532:65532 . /app
 WORKDIR /app
+COPY --chown=65532:65532 . /app
 RUN ["templ", "generate"]
 
 # Build
 FROM golang:latest AS build-stage
-COPY --from=generate-stage /app /app
 WORKDIR /app
+COPY --from=generate-stage /app /app
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/app
 
 # Test
@@ -22,13 +24,14 @@ RUN go test -v ./...
 
 # Deploy
 FROM gcr.io/distroless/base-debian12 AS deploy-stage
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-WORKDIR /
+WORKDIR /app
 COPY --from=build-stage /app/app /app/app
 COPY --from=build-stage /app/assets /app/assets
+#RUN chmod +x /app/app  # Ensure the binary has executable permissions
 EXPOSE 8080
 USER nonroot:nonroot
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["/app/app"]
+
 
 ## Install any dependencies for templ, if needed
 #RUN apk add --no-cache git
