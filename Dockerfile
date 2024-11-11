@@ -22,8 +22,10 @@ RUN go test -v ./...
 
 # Deploy
 FROM gcr.io/distroless/base-debian12 AS deploy-stage
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 WORKDIR /
-COPY --from=build-stage /app/app /app
+COPY --from=build-stage /app/app /app/app
+COPY --from=build-stage /app/assets /app/assets
 EXPOSE 8080
 USER nonroot:nonroot
 ENTRYPOINT ["/app"]
