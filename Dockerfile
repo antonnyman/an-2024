@@ -1,7 +1,7 @@
 # Fetch dependencies
 FROM golang:latest AS fetch-stage
-COPY go.mod go.sum ./
 WORKDIR /app
+COPY go.mod go.sum ./
 RUN go mod download
 
 # Generate views with templ
@@ -18,16 +18,16 @@ WORKDIR /app
 COPY --from=generate-stage /app /app
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/app
 
+# Run tests
+FROM build-stage AS test-stage
+RUN go test -v ./...
+
 # Deploy the application
-FROM alpine:latest AS deploy-stage
+FROM gcr.io/distroless/base-debian12 AS deploy-stage
 WORKDIR /
-# Copy the compiled binary
 COPY --from=build-stage /app/app /app
-# Ensure the binary is executable
-RUN chmod +x /app
-# Expose application port
 EXPOSE 8080
-# Set entrypoint to run the application
+USER nonroot:nonroot
 ENTRYPOINT ["/app"]
 
 ## Install any dependencies for templ, if needed
