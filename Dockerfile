@@ -10,7 +10,8 @@ WORKDIR /app
 COPY --from=fetch-stage /app/go.mod /app/go.sum ./
 RUN go mod download
 COPY . .
-RUN templ generate
+RUN ["templ", "generate"]
+# Note also the use of the RUN ["templ", "generate"] command instead of the common RUN templ generate command. This is because the templ Docker container does not contain a shell environment to keep its size minimal, so the command must be ran in the "exec" form.
 
 # Build the application
 FROM golang:latest AS build-stage
