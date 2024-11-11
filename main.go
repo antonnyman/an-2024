@@ -29,7 +29,7 @@ func main() {
 	port := ":3456"
 
 	if env == "production" {
-		port = ":5000"
+		port = ":8080"
 	}
 
 	if err := app.Start(port); !errors.Is(err, http.ErrServerClosed) {
