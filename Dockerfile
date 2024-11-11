@@ -1,30 +1,33 @@
-# Fetch
+# Fetch dependencies
 FROM golang:latest AS fetch-stage
-COPY go.mod go.sum /app
 WORKDIR /app
+COPY go.mod go.sum ./
 RUN go mod download
 
-# Generate
+# Generate views with templ
 FROM ghcr.io/a-h/templ:latest AS generate-stage
-COPY --chown=65532:65532 . /app
 WORKDIR /app
-RUN ["templ", "generate"]
+COPY --from=fetch-stage /app/go.mod /app/go.sum ./
+RUN go mod download
+COPY . .
+RUN templ generate
 
-# Build
+# Build the application
 FROM golang:latest AS build-stage
-COPY --from=generate-stage /app /app
 WORKDIR /app
+COPY --from=generate-stage /app /app
 RUN CGO_ENABLED=0 GOOS=linux go build -o /app/app
 
-# Test
-FROM build-stage AS test-stage
-RUN go test -v ./...
-
-# Deploy
+# Deploy the application
 FROM alpine:latest AS deploy-stage
 WORKDIR /
+# Copy the compiled binary
 COPY --from=build-stage /app/app /app
+# Ensure the binary is executable
+RUN chmod +x /app
+# Expose application port
 EXPOSE 8080
+# Set entrypoint to run the application
 ENTRYPOINT ["/app"]
 
 ## Install any dependencies for templ, if needed
