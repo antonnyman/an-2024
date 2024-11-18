@@ -9,6 +9,7 @@ templ SideProjectsSectionView(sideProjects []models.SideProject) {
 	<article class="grid-full">
 		<h1>Projects</h1>
 		<p>Sometimes I find the time to create an app or a tool that I find useful. Maybe you will too.</p>
+		<p>Most of these were made in 12 hours or less, so don't expect too much.</p>
 		<div class="side-projects">
 			for _, sideProject := range sideProjects {
 				@partials.SideProjectPartialView(sideProject)
