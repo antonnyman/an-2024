@@ -8,10 +8,16 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		return
+	}
 	app := echo.New()
 	// app.Use(middleware.Gzip())
 	lib.CombineCSS("./assets/stylesheets/partials", "./assets/stylesheets/styles.css")
@@ -26,6 +32,16 @@ func main() {
 	app.GET("/embroidery", routes.EmbroideryView)
 	app.GET("/blog/my-coffee-recipes", routes.CoffeeRecipesView)
 	app.GET("/blog/i-captured-60-dv-tapes-in-2020", routes.DVTapesView)
+	app.GET("/blog/using-appstorage-with-observable", routes.AppStorageObservable)
+
+	v1 := app.Group("/api/v1")
+
+	v1.Use(middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
+		KeyLookup: "query:api-key",
+		Validator: func(key string, c echo.Context) (bool, error) {
+			return key == os.Getenv("API_KEY"), nil
+		},
+	}))
 
 	app.HTTPErrorHandler = routes.HTTPErrorHandler
 

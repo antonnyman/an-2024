@@ -123,6 +123,7 @@ display: none;
 }
 
 .grid-full {
+width: 100%;
 grid-column: 1 / span 2;
 }
 

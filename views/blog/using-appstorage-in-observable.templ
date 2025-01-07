@@ -1,0 +1,89 @@
+package blog
+
+import "an-2024/views/layout"
+
+templ AppStorageInObservable() {
+	@layout.Blog("Using @AppStorage with @Observable") {
+		@layout.Header(true)
+		<main class="post">
+			<article>
+				<h1 id="using-appstorage-in-observable">
+					Using @AppStorage with @Observable
+				</h1>
+				<p>
+					Written Jan 7, 2025
+				</p>
+				<p>
+					I wanted to persist values that I tracked in an 
+					<code class="language-swift">{ `@Observable` }</code> class using <code class="language-swift">{ `@AppStorage` }</code> and found pretty quickly out that it didn't work which was a bit of a disappointment.
+				</p>
+				<p>
+					After some googling I found a few workarounds and even a <a href="https://github.com/davidsteppenbeck/ObservableUserDefault">Swift package</a> that adds another macro to patch the incompatibility.
+				</p>
+				<p>
+					However I found the more elegant solution in the excellent open source <a href="https://github.com/Dimillian/IceCubesApp/blob/main/Packages/Env/Sources/Env/UserPreferences.swift">Ice Cubes repository</a>. Here's a basic example based on that.
+				</p>
+				<pre>
+					<code class="language-swift">
+						{ `@MainActor // Required to avoid concurrency issues
+@Observable class Store {
+    class Storage {
+        @AppStorage("storage_key") var taylor = "swift"
+    }
+
+    private let storage = Storage()
+
+    var taylor: String {
+        didSet { storage.taylor = taylor }
+    }
+
+    init() {
+        taylor = storage.taylor
+    }
+}` }
+					</code>
+				</pre>
+				<p>
+					It can then be injected as an environment object.
+				</p>
+				<pre>
+					<code class="language-swift">
+						{ `struct ContentView: View {
+    @State var store = Store()
+
+    var body: some View {
+        StartView()
+            .environment(store)
+    }
+}` }
+					</code>
+				</pre>
+				<p>
+					To store the changes, add a 
+					<code class="language-swift">{ `@Bindable` }</code> to the store property.
+				</p>
+				<pre>
+					<code class="language-swift">
+						{ `@MainActor
+struct StartView: View {
+    @Environment(Store.self) var store
+
+    var body: some View {
+        @Bindable var store = store // Needed to create a mutable binding scoped within the body
+
+        TextField("Stored", text: $store.taylor)
+    }
+}` }
+					</code>
+				</pre>
+				<p>
+					Further reading:
+				</p>
+				<ul>
+					<li><a href="https://www.hackingwithswift.com/quick-start/swiftui/what-is-the-appstorage-property-wrapper">Introduction to the @AppStorage property wrapper - Hacking with Swift</a></li>
+					<li><a href="https://www.avanderlee.com/swiftui/observable-macro-performance-increase-observableobject/">About @Observable - SwiftLee</a></li>
+				</ul>
+			</article>
+		</main>
+	}
+}

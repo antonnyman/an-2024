@@ -15,6 +15,7 @@ templ IndexView(sideProjects []models.SideProject) {
 				<div class="content">
 					@partials.ContentPartialView()
 					@partials.AvatarPartialView()
+					@sections.BlogSectionView()
 					@sections.SideProjectsSectionView(sideProjects)
 					@sections.OtherSectionView()
 				</div>
