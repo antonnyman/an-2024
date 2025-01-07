@@ -2,18 +2,18 @@ module an-2024
 
 go 1.21.3
 
-require github.com/labstack/echo/v4 v4.12.0
+require (
+	github.com/joho/godotenv v1.5.1
+	github.com/labstack/echo/v4 v4.12.0
+)
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
 	golang.org/x/time v0.5.0 // indirect
 )
 
 require (
 	github.com/a-h/templ v0.2.778
-	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
