@@ -1,6 +1,12 @@
 package layout
 
 templ Base() {
+	@baseTemplate(latestRevisionUrl("/assets/stylesheets/styles.css"), latestRevisionUrl("/assets/javascripts/index.js")) {
+		{ children... }
+	}
+}
+
+templ baseTemplate(cssPath string, jsPath string) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -10,8 +16,8 @@ templ Base() {
 			<meta name="description" content=""/>
 			<meta name="robots" content="index, follow"/>
 			<title>Anton Nyman</title>
-			<link rel="stylesheet" type="text/css" href={ latestRevisionUrl("/assets/stylesheets/styles.css") }/>
-			<script src={ latestRevisionUrl("/assets/javascripts/index.js") } type="module"></script>
+			<link rel="stylesheet" type="text/css" href={ cssPath }/>
+			<script src={ jsPath } type="module"></script>
 		</head>
 		<body>
 			{ children... }
