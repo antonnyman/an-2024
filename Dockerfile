@@ -1,4 +1,3 @@
-
 # Fetch
 FROM golang:latest AS fetch-stage
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -17,17 +16,18 @@ RUN ["templ", "generate"]
 FROM golang:latest AS build-stage
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 WORKDIR /app
+COPY --from=fetch-stage /go/pkg/mod /go/pkg/mod
 COPY --from=generate-stage /app /app
-RUN CGO_ENABLED=0 GOOS=linux go build -o /app/app
+RUN CGO_ENABLED=0 GOOS=linux go build -buildvcs=false -o /app/app
 
 # Deploy
 FROM gcr.io/distroless/base-debian12 AS deploy-stage
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 WORKDIR /app
-COPY --from=build-stage /app/app /app/app
+COPY --from=build-stage --chmod=0755 /app/app /app/app
 COPY --from=build-stage /app/assets /app/assets
-#RUN chmod +x /app/app  # Ensure the binary has executable permissions
 EXPOSE 5000
+ENV PORT=5000
 USER nonroot:nonroot
 ENTRYPOINT ["/app/app"]
 

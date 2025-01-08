@@ -14,10 +14,8 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		return
-	}
+	_ = godotenv.Load()
+
 	app := echo.New()
 	// app.Use(middleware.Gzip())
 	lib.CombineCSS("./assets/stylesheets/partials", "./assets/stylesheets/styles.css")
