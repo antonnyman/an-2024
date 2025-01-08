@@ -13,6 +13,7 @@ WORKDIR /app
 COPY --chown=65532:65532 . /app
 RUN ["templ", "generate"]
 
+
 # Build
 FROM golang:latest AS build-stage
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
