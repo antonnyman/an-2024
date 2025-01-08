@@ -11,12 +11,13 @@
     "web": {
       "type": "startup",
       "name": "web healthcheck",
+      "description": "Healthcheck",
       "path": "/healthcheck",
       "protocol": "HTTP",
       "port": 5000,
       "interval": 10,
-      "timeout": 5,
-      "max_attempts": 3
+      "timeout": 10,
+      "max_attempts": 5
     }
   }
 }
