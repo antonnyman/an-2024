@@ -52,7 +52,7 @@ func main() {
 		port = ":5000"
 	}
 
-	if err := app.Start("0.0.0.0" + port); err != nil && !errors.Is(err, http.ErrServerClosed) {
+	if err := app.Start(port); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
 	}
 }
