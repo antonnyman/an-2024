@@ -2,54 +2,22 @@ package layout
 
 import (
 	"encoding/hex"
-	"fmt"
 	"hash/fnv"
 	"os"
 )
 
-// func cssUrl() string {
-// 	path := "/assets/stylesheets/styles.css"
-
-// 	fileInfo, err := os.Stat("." + path)
-
-// 	if err != nil {
-// 		return ""
-// 	}
-
-// 	modTime := fileInfo.ModTime().Unix()
-
-// 	h := fnv.New64a()
-// 	_, err = h.Write([]byte(fmt.Sprintf("%d", modTime)))
-// 	if err != nil {
-// 		return ""
-// 	}
-
-// 	hash := h.Sum(nil)
-// 	shortHash := hex.EncodeToString(hash)[:8]
-
-// 	return path + "?v=" + shortHash
-
-// }
-
 func latestRevisionUrl(path string) string {
-	
-	fileInfo, err := os.Stat("." + path)
-	
+	content, err := os.ReadFile("." + path)
 	if err != nil {
-		return ""
+		return path // Fallback to original path if can't read
 	}
-
-	modTime := fileInfo.ModTime().Unix()
 
 	h := fnv.New64a()
-	_, err = h.Write([]byte(fmt.Sprintf("%d", modTime)))
+	_, err = h.Write(content)
 	if err != nil {
-		return ""
+		return path
 	}
 
-	hash := h.Sum(nil)
-	shortHash := hex.EncodeToString(hash)[:8]
-	
-	return path + "?v=" + shortHash
-
+	hash := hex.EncodeToString(h.Sum(nil))[:8]
+	return path + "?v=" + hash
 }
