@@ -24,7 +24,7 @@ func main() {
 
 	app.Static("/assets", "assets")
 
-	app.GET("/healthcheck", func(c echo.Context) error {
+	app.Any("/healthcheck", func(c echo.Context) error {
 		return c.String(http.StatusOK, "OK")
 	})
 
@@ -52,7 +52,7 @@ func main() {
 		port = ":5000"
 	}
 
-	if err := app.Start(port); !errors.Is(err, http.ErrServerClosed) {
+	if err := app.Start("0.0.0.0" + port); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
 	}
 }
