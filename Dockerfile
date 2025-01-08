@@ -28,6 +28,7 @@ COPY --from=build-stage --chmod=0755 /app/app /app/app
 COPY --from=build-stage /app/assets /app/assets
 EXPOSE 5000/tcp
 ENV PORT=5000
+ENV APP_ENV=production
 USER nonroot:nonroot
 ENTRYPOINT ["/app/app"]
 
