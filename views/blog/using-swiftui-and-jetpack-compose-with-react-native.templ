@@ -1,0 +1,28 @@
+package blog
+
+import "an-2024/views/layout"
+
+templ UsingSwiftUIAndJetpackComposeWithReactNative() {
+	@layout.Blog("Using SwiftUI and Jetpack Compose with React Native (and Expo)") {
+		@layout.Header(true)
+		<main class="post">
+			<article>
+				<h1 id="using-swiftui-and-jetpack-compose-with-react-native">
+					Using SwiftUI and Jetpack Compose with React Native (and Expo)
+				</h1>
+				<p>
+					Written Jan 26, 2025
+				</p>
+				<p>
+					There are two ways to access <em>native</em> code in React Native: components and modules. Components translate 
+				</p>
+				<p>
+					Making a native view in React Native might seem daunting, but I've found that using native controls rather than rebuilding the same UI in JS/TS often leads to a more familiar and better UI.
+				</p>
+				<p>
+					First, I'm going to show how to make a native module in a <em>bare</em> React Native project and after that how you do it in Expo (It's a lot easier).
+				</p>
+			</article>
+		</main>
+	}
+}
